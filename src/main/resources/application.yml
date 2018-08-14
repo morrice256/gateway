@@ -1,0 +1,17 @@
+server:
+  port: 9595
+  
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: singlesignon_oauth
+        uri: http://localhost:8787
+        predicates:
+        - Path=/singlesignon/oauth/token
+        filters:
+        - AddRequestHeader=Authorization, Basic Y2xpZW50SWRQYXNzd29yZDpzZWNyZXQ=
+      - id: resources
+        uri: http://localhost:8585
+        predicates:
+        - Path=/resources/**
